@@ -13,6 +13,7 @@ function Article({ article }) {
             style={{ maxHeight: "200px", objectFit: "cover" }}
           />
         )}
+
         <div className="card-body">
           <h5 className="card-title">{article.title}</h5>
           <p className="card-text">{article.description}</p>
