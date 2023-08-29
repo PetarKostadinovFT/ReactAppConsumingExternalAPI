@@ -1,7 +1,7 @@
 const express = require("express");
 const axios = require("axios");
 const cache = require("memory-cache");
-
+const jwt = require("jsonwebtoken");
 const router = express.Router();
 
 router.get("/", async (req, res) => {
@@ -25,12 +25,27 @@ router.get("/", async (req, res) => {
       );
     }
 
-    res.json(articles);
+    if (req.headers.authorization) {
+      try {
+        jwt.verify(
+          req.headers.authorization.split(" ")[1],
+          process.env.JWT_SECRET
+        );
+
+        res.json(articles);
+      } catch (error) {
+        res.json(articles.slice(0, 3));
+      }
+    } else {
+      res.json(articles.slice(0, 3));
+    }
   } catch (error) {
     res
       .status(500)
       .json({ message: "Error fetching news", error: error.message });
   }
 });
+
+
 
 module.exports = router;

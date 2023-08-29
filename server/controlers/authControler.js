@@ -31,7 +31,18 @@ const registerUser = async (req, res) => {
       password: hashedPassword,
     });
 
-    return res.json(user);
+    jwt.sign(
+      { email: user.email, id: user._id },
+      process.env.JWT_SECRET,
+      {},
+      (err, token) => {
+        if (err) {
+          console.log(err);
+          return res.status(500).json({ error: "Error generating token" });
+        }
+        res.cookie("token", token).json(user);
+      }
+    );
   } catch (error) {
     console.log(error);
   }
@@ -66,6 +77,7 @@ const loginUser = async (req, res) => {
     console.log(error);
   }
 };
+
 
 module.exports = {
   registerUser,

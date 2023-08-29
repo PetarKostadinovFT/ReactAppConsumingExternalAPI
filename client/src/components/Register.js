@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import "../styles/register.css";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { useAuth } from "../context/userContext";
 
 function Register() {
   const navigate = useNavigate();
-
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
   const [data, setData] = useState({ email: "", password: "", repass: "" });
 
   const [loading, setLoading] = useState(false);
@@ -31,7 +33,8 @@ function Register() {
         toast.error(data.error);
       } else {
         setData({});
-        toast.success("Login Successful. Welcome!");
+        setIsAuthenticated(true);
+        toast.success("Register Successful. Welcome!");
         navigate("/");
       }
     } catch (err) {
@@ -42,7 +45,7 @@ function Register() {
   };
 
   return (
-    <div className="container d-flex align-items-center justify-content-center vh-100">
+    <div className="container-fluid d-flex align-items-center justify-content-center vh-100">
       <div className="card shadow p-5">
         <div className="card-body">
           <h3 className="card-title text-center mb-4">Register</h3>
@@ -91,7 +94,7 @@ function Register() {
             </div>
             <button
               type="submit"
-              className="btn btn-primary btn-block"
+              className="btn btn-primary btn-block register-btn"
               disabled={loading}
             >
               {loading ? "Registering..." : "Register"}

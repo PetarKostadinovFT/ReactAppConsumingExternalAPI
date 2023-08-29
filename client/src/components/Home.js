@@ -1,9 +1,11 @@
 import React, { useState } from "react";
+import { useAuth } from "../context/userContext";
 import NewsArticles from "./NewsArticles";
+import "../styles/home.css";
 
 function HomePage() {
   const [searchQuery, setSearchQuery] = useState("");
-
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
   const handleSearchChange = (event) => {
     setSearchQuery(event.target.value);
   };
@@ -13,6 +15,11 @@ function HomePage() {
       <section>
         <div className="container">
           <div className="row">
+            {!isAuthenticated && (
+              <div className="text-center responsive-text">
+                <h3>FREE Register to read all news with details</h3>
+              </div>
+            )}
             <div className="col-md-8">
               <div className="col-md-4">
                 <div className="sidebar pt-4">

@@ -5,9 +5,14 @@
     position: relative;
     height:fit-content;
   } */
+
+  .header-top{
+    background-color: #0a5e66;
+  }
 .logo {
     width: 40px;
     height: 40px;
+    transition: font-size 0.3s ease; 
   }
   
   .nav-links {
@@ -16,41 +21,40 @@
   }
   
   .nav-links a {
-    color: #333; 
+    color: wheat; 
     text-decoration: none;
     margin: 0 10px;
     transition: color 0.3s ease;
+    font-size: larger;
+    transition: font-size 0.3s ease; 
   }
   
   .nav-links a:hover {
-    color: #3224cd; 
+    font-size: x-large;
+    color: aliceblue;
   }
   
   .add-article-btn {
-    background-color: #2e10c1; 
-    color: white;
+    color: wheat;
     border: none;
     transition: background-color 0.3s ease;
   }
   
-  .add-article-btn:hover {
-    background-color: #ea6b00; 
-  }
-  
-  .nav-links a {
-    color: white; 
-  }
  
   .logo {
     font-size: 2.5rem;
     font-weight: bold;
-    color: #333;
-    margin-bottom: 0;
+    color: wheat;
+    margin-bottom: 4px;
+  }
+  .logo:hover{
+    color: aliceblue;
+    font-size: 2.7rem;
   }
   
   .tagline {
     font-size: 1rem;
-    color: #666;
+    color: wheat;
     margin-top: 0;
   }
   
