@@ -8,10 +8,13 @@ import Footer from "./components/Footer";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import "./App.css";
+import { Toaster } from "react-hot-toast";
+
 function App() {
   return (
     <Router>
       <Header />
+      <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/catalog" element={<NewsArticles />} />
