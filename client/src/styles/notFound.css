@@ -1,0 +1,10 @@
+.notfound-btn {
+    background-color: #0a5e66;
+    color: wheat;
+    font-size:x-large;
+}
+.notfound-btn:hover {
+    background-color: #0a5e66;
+    color: aliceblue;
+    
+  }

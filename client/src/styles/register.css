@@ -1,0 +1,14 @@
+.container-fluid {
+    background-color: #f0ead6;
+}
+
+.btn-block {
+    background-color: #0a5e66;
+    color: wheat;
+    font-size:x-large;
+}
+.register-btn:hover {
+    background-color: #0a5e66;
+    color: aliceblue;
+    
+  }

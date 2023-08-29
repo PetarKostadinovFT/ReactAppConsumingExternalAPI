@@ -9,8 +9,11 @@ import Login from "./components/Login";
 import Register from "./components/Register";
 import "./App.css";
 import { Toaster } from "react-hot-toast";
+import NotFound from "./components/NotFound";
+import { useAuth } from "./context/userContext";
 
 function App() {
+  const { isAuthenticated } = useAuth();
   return (
     <Router>
       <Header />
@@ -18,9 +21,16 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/catalog" element={<NewsArticles />} />
-        <Route path="/details" element={<NewsArticleDetails />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
+        {!isAuthenticated ? (
+          <>
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+          </>
+        ) : (
+          <Route path="/details" element={<NewsArticleDetails />} />
+        )}
+
+        <Route path="*" element={<NotFound />} />
       </Routes>
       <Footer />
     </Router>

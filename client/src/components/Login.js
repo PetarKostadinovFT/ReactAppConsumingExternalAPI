@@ -4,25 +4,28 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/login.css";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { useAuth } from "../context/userContext";
 
 function Login() {
   const [data, setData] = useState({ email: "", password: "" });
+  const { isAuthenticated, setIsAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const loginUser = async (e) => {
     e.preventDefault();
     const { email, password } = data;
     try {
-      console.log("ee");
       const { data } = await axios.post("/login", {
         email,
         password,
       });
-      console.log(data);
+
       if (data.error) {
         toast.error(data.error);
       } else {
         setData({});
+        setIsAuthenticated(true);
+        toast.success("Login Successful. Welcome!");
         navigate("/");
       }
     } catch (error) {
@@ -62,7 +65,7 @@ function Login() {
                 onChange={(e) => setData({ ...data, password: e.target.value })}
               />
             </div>
-            <button type="submit" className="btn bg-info  btn-block">
+            <button type="submit" className="btn btn-block login-btn">
               Login
             </button>
           </form>

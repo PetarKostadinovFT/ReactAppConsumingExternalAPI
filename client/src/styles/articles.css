@@ -1,0 +1,30 @@
+/* styles.css */
+.article-image {
+    max-height: 200px;
+    object-fit: cover;
+  }
+  
+  .card {
+    border: none;
+    transition: transform 0.3s;
+  }
+  
+  .card:hover {
+    transform: translateY(-5px);
+  }
+
+  .row {
+    background-color: #f0ead6;
+  }
+
+  .details-btn {
+    background-color: #0a5e66;
+    color: wheat;
+    font-size:x-large;
+}
+.details-btn:hover {
+    background-color: #0a5e66;
+    color: aliceblue;
+    
+  }
+  

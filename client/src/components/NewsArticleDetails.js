@@ -1,5 +1,5 @@
 import { useLocation } from "react-router-dom";
-
+import "../styles/details.css";
 function NewsArticleDetails() {
   const location = useLocation();
   const { article } = location.state;
@@ -35,7 +35,7 @@ function NewsArticleDetails() {
             href={article.url}
             target="_blank"
             rel="noopener noreferrer"
-            className="btn btn-primary"
+            className="btn read-more-btn"
           >
             Read All About This
           </a>
