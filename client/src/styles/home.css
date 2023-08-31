@@ -1,8 +1,6 @@
-
-.responsive-text {
-    margin-top: 20px;
-    font-size: 2rem;
-  }
-  .home-container {
+.catalog-back{
     background-color: #f0ead6;
-  }
+}
+.catalog{
+    min-height: 100vh;
+}

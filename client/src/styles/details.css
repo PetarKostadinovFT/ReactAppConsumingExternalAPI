@@ -8,5 +8,8 @@
     color: aliceblue;
     
 }
+.row{
+    min-height: 100vh;
+}
 
 

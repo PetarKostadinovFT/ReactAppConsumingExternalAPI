@@ -2,7 +2,13 @@ import React from "react";
 import "../styles/loadingSpinner.css";
 
 function LoadingSpinner() {
-  return <div className="loading-spinner"></div>;
+  return (
+    <div className="loading-container">
+      <div className="loading-spinner"></div>
+    </div>
+  );
 }
+  
+  
 
 export default LoadingSpinner;

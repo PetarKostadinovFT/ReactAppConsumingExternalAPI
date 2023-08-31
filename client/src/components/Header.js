@@ -11,12 +11,10 @@ function Header() {
 
   const logoutHandler = async () => {
     try {
-      await axios.get("/logout");
-      document.cookie =
-        "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+      await axios.get("/api/users/logout");
       setIsAuthenticated(false);
       toast.success("Logout successfuly");
-      navigate("/login");
+      navigate("/home");
     } catch (error) {
       console.log(error);
     }
@@ -28,7 +26,7 @@ function Header() {
         <div className="d-flex flex-column flex-md-row justify-content-between align-items-center">
           <div className="text-center pr-5">
             <h1 className="logo">
-              <Link to="/" className="logo">
+              <Link to="/home" className="logo">
                 NewsHub
               </Link>
             </h1>
@@ -47,12 +45,13 @@ function Header() {
             )}
 
             {isAuthenticated && (
-              <Link className="btn" onClick={logoutHandler}>
-                Logout
-              </Link>
+              <>
+                <Link className="btn" onClick={logoutHandler}>
+                  Logout
+                </Link>
+              </>
             )}
-
-            <Link to="/" className="btn">
+            <Link to="/home" className="btn">
               Home
             </Link>
           </nav>

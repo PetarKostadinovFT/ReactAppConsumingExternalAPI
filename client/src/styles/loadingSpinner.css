@@ -6,6 +6,12 @@
     height: 25px;
     animation: spin 1s linear infinite;
     margin: 0 auto;
+    
+    
+  }
+  .loading-container{
+    min-height: 100vh;
+    padding-top: 5rem;
   }
   
   @keyframes spin {

@@ -1,11 +1,10 @@
-// Article.js
 import React from "react";
 import { Link } from "react-router-dom";
 import "../styles/articles.css";
 import { useAuth } from "../context/userContext";
 
 function Article({ article }) {
-  const { isAuthenticated, setIsAuthenticated } = useAuth();
+  const { isAuthenticated } = useAuth();
 
   return (
     <div className="col-md-6 col-lg-4 mb-4">
@@ -15,6 +14,10 @@ function Article({ article }) {
             src={article.urlToImage}
             className="card-img-top article-image"
             alt={article.title}
+            onError={(e) => {
+              e.target.onerror = null;
+              e.target.src = "../../public/logo192.png";
+            }}
           />
         )}
         <div className="card-body">
