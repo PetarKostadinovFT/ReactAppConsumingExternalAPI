@@ -8,15 +8,17 @@
     color: aliceblue;
     
   }
-/* login.css */
-/* Ensure container covers full viewport height on small screens */
+
+  .container-login{
+    min-height: 100vh;
+  }
+
 @media (max-height: 575px) {
     .container-fluid {
       min-height: 100vh;
     }
   }
   
-  /* Add margin on top and bottom for small screens */
   @media (max-width: 767px) {
     .container-fluid {
       margin-top: 1rem;

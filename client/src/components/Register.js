@@ -8,7 +8,7 @@ import { useAuth } from "../context/userContext";
 
 function Register() {
   const navigate = useNavigate();
-  const { isAuthenticated, setIsAuthenticated } = useAuth();
+  const { setIsAuthenticated } = useAuth();
   const [data, setData] = useState({ email: "", password: "", repass: "" });
 
   const [loading, setLoading] = useState(false);
@@ -24,7 +24,7 @@ function Register() {
     }
 
     try {
-      const { data } = await axios.post("/register", {
+      const { data } = await axios.post("/api/users/register", {
         email,
         password,
       });
@@ -35,7 +35,7 @@ function Register() {
         setData({});
         setIsAuthenticated(true);
         toast.success("Register Successful. Welcome!");
-        navigate("/");
+        navigate("/home");
       }
     } catch (err) {
       console.log(err);
@@ -45,7 +45,7 @@ function Register() {
   };
 
   return (
-    <div className="container-fluid d-flex align-items-center justify-content-center vh-100">
+    <div className="container-fluid d-flex align-items-center justify-content-center ">
       <div className="card shadow p-5">
         <div className="card-body">
           <h3 className="card-title text-center mb-4">Register</h3>

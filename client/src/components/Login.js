@@ -8,14 +8,14 @@ import { useAuth } from "../context/userContext";
 
 function Login() {
   const [data, setData] = useState({ email: "", password: "" });
-  const { isAuthenticated, setIsAuthenticated } = useAuth();
+  const { setIsAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const loginUser = async (e) => {
     e.preventDefault();
     const { email, password } = data;
     try {
-      const { data } = await axios.post("/login", {
+      const { data } = await axios.post("/api/users/login", {
         email,
         password,
       });
@@ -26,7 +26,7 @@ function Login() {
         setData({});
         setIsAuthenticated(true);
         toast.success("Login Successful. Welcome!");
-        navigate("/");
+        navigate("/home");
       }
     } catch (error) {
       console.log(error);
@@ -34,7 +34,7 @@ function Login() {
   };
 
   return (
-    <div className="container-fluid d-flex align-items-center justify-content-center vh-100">
+    <div className="container-fluid d-flex align-items-center justify-content-center container-login">
       <div className="card shadow p-5">
         <div className="card-body">
           <h3 className="card-title text-center mb-4">Login</h3>

@@ -1,10 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
-const newsRoutes = require("./routes/newsRoutes");
-const Routes = require("./routes/userRoutes");
 const dotenv = require("dotenv");
 const cookieParser = require("cookie-parser");
-const jwt = require("jsonwebtoken");
 
 dotenv.config();
 const app = express();
@@ -23,9 +20,8 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: false }));
 
-app.use("/api/", newsRoutes);
-// app.use("/api/users", userRoutes);
-app.use("/", require("./routes/userRoutes"));
+app.use("/api/articles", require("./routes/newsRoutes"));
+app.use("/api/users", require("./routes/userRoutes"));
 
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);

@@ -1,7 +1,6 @@
 import React from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import Home from "./components/Home";
-import NewsArticles from "./components/NewsArticles";
 import NewsArticleDetails from "./components/NewsArticleDetails";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
@@ -19,8 +18,7 @@ function App() {
       <Header />
       <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/catalog" element={<NewsArticles />} />
+        <Route path="/home" element={<Home />} />
         {!isAuthenticated ? (
           <>
             <Route path="/login" element={<Login />} />
