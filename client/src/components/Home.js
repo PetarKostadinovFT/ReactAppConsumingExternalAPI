@@ -1,80 +1,45 @@
 import React, { useState, useEffect } from "react";
-import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/home.css";
 import Article from "./Article";
-import Cookies from "js-cookie";
+import _ from "lodash";
 import Pagination from "./Pagination";
 import { useAuth } from "../context/userContext";
+import useArticleFetch from "../utils/useArticleFetch";
 
 function NewsArticles() {
-  const [allArticles, setAllArticles] = useState([]);
-  const { isAuthenticated } = useAuth();
   const articlesPerPage = 6; // articles per page
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [error, setError] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [searchQuery, setSearchQuery] = useState("");
+  const { isAuthenticated } = useAuth();
+
+  const {
+    allArticles,
+    error,
+    isLoading,
+    searchQuery,
+    handleSearchChange,
+    fetchArticles,
+  } = useArticleFetch();
+
+  const debouncedFetchArticles = _.debounce(fetchArticles, 800);
 
   useEffect(() => {
-    let debounceTimer;
-
     if (searchQuery) {
-      debounceTimer = setTimeout(() => {
-        fetchArticles();
-      }, 800);
+      debouncedFetchArticles();
     } else {
       fetchArticles();
     }
-
-    return () => {
-      clearTimeout(debounceTimer);
-    };
   }, [searchQuery, isAuthenticated]);
 
-  const fetchArticles = async () => {
-    setIsLoading(true);
-
-    try {
-      const token = Cookies.get("token");
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-
-      const response = await axios.get("/api/articles/home", {
-        params: { q: searchQuery },
-        headers,
-      });
-      const fetchedArticles = response.data;
-
-      if (fetchedArticles) {
-        setAllArticles(fetchedArticles);
-        setError(null);
-      } else {
-        setAllArticles([]);
-        setError("No articles found.");
-      }
-    } catch (error) {
-      setAllArticles([]);
-      setError("Error loading news. Please try again later.");
-    }
-
-    setIsLoading(false);
-  };
-
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
-
-  const handlePageChange = (newPage) => {
+  function handlePageChange(newPage) {
     setCurrentPage(newPage);
-  };
+  }
 
   const startIndex = (currentPage - 1) * articlesPerPage;
   const endIndex = startIndex + articlesPerPage;
   const articlesToDisplay = allArticles.slice(startIndex, endIndex);
-
+  console.log(allArticles);
   return (
     <div className="container my-5 catalog">
       {!isAuthenticated && (
@@ -105,7 +70,7 @@ function NewsArticles() {
             <span className="visually-hidden">Loading...</span>
           </div>
         </div>
-      ) : error ? (
+      ) : error || allArticles === [] ? (
         <div className="alert alert-danger text-center">{error}</div>
       ) : (
         <div>
