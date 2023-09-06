@@ -6,14 +6,12 @@ import {
   fireEvent,
   cleanup,
   waitFor,
-  close,
 } from "@testing-library/react";
 import { AuthProvider } from "../src/context/userContext";
 import { MemoryRouter } from "react-router-dom";
-//import userEvent from "@testing-library/user-event";
 import "@testing-library/jest-dom";
-import { Toaster } from "react-hot-toast";
 import axios from "axios"; // Import Axios
+import { expect, test } from "@jest/globals";
 
 afterEach(cleanup);
 
