@@ -12,21 +12,21 @@ import NotFound from "./components/NotFound";
 import { useAuth } from "./context/userContext";
 
 function App() {
-  const { isAuthenticated } = useAuth();
   return (
     <Router>
       <Header />
-      <Toaster position="bottom-right" toastOptions={{ duration: 2000 }} />
+      <Toaster
+        data-testid="toaster-mock"
+        position="bottom-right"
+        toastOptions={{ duration: 3500 }}
+      />
       <Routes>
         <Route path="/home" element={<Home />} />
-        {!isAuthenticated ? (
-          <>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-          </>
-        ) : (
-          <Route path="/details" element={<NewsArticleDetails />} />
-        )}
+
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+
+        <Route path="/details" element={<NewsArticleDetails />} />
 
         <Route path="*" element={<NotFound />} />
       </Routes>

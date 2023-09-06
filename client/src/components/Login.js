@@ -7,14 +7,18 @@ import { toast } from "react-hot-toast";
 import { useAuth } from "../context/userContext";
 
 function Login() {
-  const [data, setData] = useState({ email: "", password: "" });
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const { setIsAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const loginUser = async (e) => {
     e.preventDefault();
-    const { email, password } = data;
+
     try {
+      if (email === "" || password === "") {
+        return toast.error("All fields are required!");
+      }
       const { data } = await axios.post("/api/users/login", {
         email,
         password,
@@ -23,13 +27,14 @@ function Login() {
       if (data.error) {
         toast.error(data.error);
       } else {
-        setData({});
+        // setEmail({});
+        // setPassword({});
         setIsAuthenticated(true);
         toast.success("Login Successful. Welcome!");
         navigate("/home");
       }
     } catch (error) {
-      console.log(error);
+      toast.error(error);
     }
   };
 
@@ -38,7 +43,7 @@ function Login() {
       <div className="card shadow p-5">
         <div className="card-body">
           <h3 className="card-title text-center mb-4">Login</h3>
-          <form onSubmit={loginUser}>
+          <form data-testid="login-form" onSubmit={loginUser}>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">
                 Email
@@ -48,8 +53,8 @@ function Login() {
                 className="form-control"
                 id="email"
                 placeholder="Enter Email..."
-                value={data.email}
-                onChange={(e) => setData({ ...data, email: e.target.value })}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
               />
             </div>
             <div className="mb-3">
@@ -61,11 +66,15 @@ function Login() {
                 className="form-control"
                 id="password"
                 placeholder="Enter Password..."
-                value={data.password}
-                onChange={(e) => setData({ ...data, password: e.target.value })}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
               />
             </div>
-            <button type="submit" className="btn btn-block login-btn">
+            <button
+              data-testid="login-button"
+              type="submit"
+              className="btn btn-block login-btn"
+            >
               Login
             </button>
           </form>

@@ -7,7 +7,7 @@ import Pagination from "./Pagination";
 import { useAuth } from "../context/userContext";
 import useArticleFetch from "../utils/useArticleFetch";
 
-function NewsArticles() {
+function Home() {
   const articlesPerPage = 6; // articles per page
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -39,12 +39,14 @@ function NewsArticles() {
   const startIndex = (currentPage - 1) * articlesPerPage;
   const endIndex = startIndex + articlesPerPage;
   const articlesToDisplay = allArticles.slice(startIndex, endIndex);
-  console.log(allArticles);
+
   return (
     <div className="container my-5 catalog">
       {!isAuthenticated && (
         <div className="text-center responsive-text">
-          <h3>FREE Register to read all news with details</h3>
+          <h3 className="nonRegisteredUserMessage">
+            FREE Register to read all news with details
+          </h3>
         </div>
       )}
       {isAuthenticated && (
@@ -63,7 +65,7 @@ function NewsArticles() {
           </div>
         </div>
       )}
-      <h1 className="text-center mb-4">Latest News</h1>
+      <h1 className="latest text-center mb-4">Latest News</h1>
       {isLoading ? (
         <div className="text-center">
           <div className="spinner-border text-primary" role="status">
@@ -94,4 +96,4 @@ function NewsArticles() {
   );
 }
 
-export default NewsArticles;
+export default Home;
