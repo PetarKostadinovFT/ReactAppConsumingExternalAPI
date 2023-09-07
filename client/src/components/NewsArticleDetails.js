@@ -28,6 +28,7 @@ function NewsArticleDetails() {
                 src={article.urlToImage}
                 className="img-fluid rounded mb-4"
                 alt={article.title}
+                onError={(e) => (e.target.style.display = "none")}
               />
             )}
             <p className="lead mb-4">{article.description}</p>

@@ -18,11 +18,13 @@ function Register() {
 
     const { email, password, repass } = data;
 
+    if (email === "" || password === "" || repass === "") {
+      return toast.error("All fields are required!");
+    }
     if (password !== repass) {
       toast.error("Passwords don't match!");
       return;
     }
-
     try {
       const { data } = await axios.post("/api/users/register", {
         email,
@@ -38,7 +40,7 @@ function Register() {
         navigate("/home");
       }
     } catch (err) {
-      console.log(err);
+      toast.error(err);
     }
 
     setLoading(false);
@@ -55,10 +57,8 @@ function Register() {
                 Email
               </label>
               <input
-                type="email"
                 className="form-control"
                 id="email"
-                required
                 value={data.email}
                 onChange={(e) => setData({ ...data, email: e.target.value })}
                 placeholder="Enter Email..."
@@ -72,7 +72,6 @@ function Register() {
                 type="password"
                 className="form-control"
                 id="password"
-                required
                 value={data.password}
                 onChange={(e) => setData({ ...data, password: e.target.value })}
                 placeholder="Enter Password..."
@@ -86,13 +85,13 @@ function Register() {
                 type="password"
                 className="form-control"
                 id="repass"
-                required
                 value={data.repass}
                 onChange={(e) => setData({ ...data, repass: e.target.value })}
                 placeholder="Repeat Password..."
               />
             </div>
             <button
+              data-testid="register-button"
               type="submit"
               className="btn btn-primary btn-block register-btn"
               disabled={loading}
