@@ -39,7 +39,7 @@ function NewsArticles() {
   const startIndex = (currentPage - 1) * articlesPerPage;
   const endIndex = startIndex + articlesPerPage;
   const articlesToDisplay = allArticles.slice(startIndex, endIndex);
-  console.log(allArticles);
+
   return (
     <div className="container my-5 catalog">
       {!isAuthenticated && (

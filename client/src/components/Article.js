@@ -14,10 +14,6 @@ function Article({ article }) {
             src={article.urlToImage}
             className="card-img-top article-image"
             alt={article.title}
-            onError={(e) => {
-              e.target.onerror = null;
-              e.target.src = "../../public/logo192.png";
-            }}
           />
         )}
         <div className="card-body">

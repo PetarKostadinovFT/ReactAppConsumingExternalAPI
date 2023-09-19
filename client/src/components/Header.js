@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import "../styles/header.css";
 import axios from "axios";
 
+import { logout } from "../utils/logoutUtils";
 import { useAuth } from "../context/userContext";
 import { toast } from "react-hot-toast";
 
@@ -10,13 +11,12 @@ function Header() {
   const { isAuthenticated, setIsAuthenticated } = useAuth();
 
   const logoutHandler = async () => {
-    try {
-      await axios.get("/api/users/logout");
-      setIsAuthenticated(false);
-      toast.success("Logout successfuly");
+    const success = await logout(setIsAuthenticated);
+    if (success) {
+      toast.success("Logout successfully");
       navigate("/home");
-    } catch (error) {
-      console.log(error);
+    } else {
+      toast.error("Logout failed. Please try again.");
     }
   };
 

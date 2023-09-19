@@ -1,27 +1,21 @@
 import { useState } from "react";
-import axios from "axios";
-import Cookies from "js-cookie";
+import { fetchArticles } from "./fetchArticles";
 
-function useArticleFetch() {
+export function useArticleFetch() {
   const [allArticles, setAllArticles] = useState([]);
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
 
-  const fetchArticles = async () => {
+  const handleSearchChange = (event) => {
+    setSearchQuery(event.target.value);
+  };
+
+  const fetchData = async () => {
     setIsLoading(true);
 
     try {
-      const token = Cookies.get("token");
-      const headers = {
-        Authorization: `Bearer ${token}`,
-      };
-
-      const response = await axios.get("/api/articles/home", {
-        params: { q: searchQuery },
-        headers,
-      });
-      const fetchedArticles = response.data;
+      const fetchedArticles = await fetchArticles(searchQuery);
 
       if (fetchedArticles) {
         setAllArticles(fetchedArticles);
@@ -38,17 +32,13 @@ function useArticleFetch() {
     setIsLoading(false);
   };
 
-  const handleSearchChange = (event) => {
-    setSearchQuery(event.target.value);
-  };
-
   return {
     allArticles,
     error,
     isLoading,
     searchQuery,
     handleSearchChange,
-    fetchArticles,
+    fetchArticles: fetchData,
   };
 }
 

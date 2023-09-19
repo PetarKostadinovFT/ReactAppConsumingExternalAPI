@@ -2,9 +2,8 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/login.css";
-import axios from "axios";
-import { toast } from "react-hot-toast";
 import { useAuth } from "../context/userContext";
+import { handleLogin } from "../utils/loginUtils";
 
 function Login() {
   const [data, setData] = useState({ email: "", password: "" });
@@ -13,24 +12,7 @@ function Login() {
 
   const loginUser = async (e) => {
     e.preventDefault();
-    const { email, password } = data;
-    try {
-      const { data } = await axios.post("/api/users/login", {
-        email,
-        password,
-      });
-
-      if (data.error) {
-        toast.error(data.error);
-      } else {
-        setData({});
-        setIsAuthenticated(true);
-        toast.success("Login Successful. Welcome!");
-        navigate("/home");
-      }
-    } catch (error) {
-      console.log(error);
-    }
+    handleLogin(data, setIsAuthenticated, navigate);
   };
 
   return (

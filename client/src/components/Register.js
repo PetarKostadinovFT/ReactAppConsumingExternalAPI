@@ -5,6 +5,7 @@ import "../styles/register.css";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useAuth } from "../context/userContext";
+import { handleRegister } from "../utils/registerUtils";
 
 function Register() {
   const navigate = useNavigate();
@@ -13,34 +14,9 @@ function Register() {
 
   const [loading, setLoading] = useState(false);
 
-  const handleRegister = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const { email, password, repass } = data;
-
-    if (password !== repass) {
-      toast.error("Passwords don't match!");
-      return;
-    }
-
-    try {
-      const { data } = await axios.post("/api/users/register", {
-        email,
-        password,
-      });
-
-      if (data.error) {
-        toast.error(data.error);
-      } else {
-        setData({});
-        setIsAuthenticated(true);
-        toast.success("Register Successful. Welcome!");
-        navigate("/home");
-      }
-    } catch (err) {
-      console.log(err);
-    }
-
+    handleRegister(data, setIsAuthenticated, navigate);
     setLoading(false);
   };
 
@@ -49,7 +25,7 @@ function Register() {
       <div className="card shadow p-5">
         <div className="card-body">
           <h3 className="card-title text-center mb-4">Register</h3>
-          <form onSubmit={handleRegister}>
+          <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">
                 Email
@@ -58,7 +34,6 @@ function Register() {
                 type="email"
                 className="form-control"
                 id="email"
-                required
                 value={data.email}
                 onChange={(e) => setData({ ...data, email: e.target.value })}
                 placeholder="Enter Email..."
@@ -72,7 +47,6 @@ function Register() {
                 type="password"
                 className="form-control"
                 id="password"
-                required
                 value={data.password}
                 onChange={(e) => setData({ ...data, password: e.target.value })}
                 placeholder="Enter Password..."
@@ -86,13 +60,13 @@ function Register() {
                 type="password"
                 className="form-control"
                 id="repass"
-                required
                 value={data.repass}
                 onChange={(e) => setData({ ...data, repass: e.target.value })}
                 placeholder="Repeat Password..."
               />
             </div>
             <button
+              data-testid="register-button"
               type="submit"
               className="btn btn-primary btn-block register-btn"
               disabled={loading}
