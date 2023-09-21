@@ -59,6 +59,11 @@ const loginUser = async (req, res) => {
   try {
     const { email, password } = req.body;
     const user = await User.findOne({ email });
+    if (!email || !password) {
+      return res.json({
+        error: "All fields are required!",
+      });
+    }
     if (!user) {
       return res.json({
         error: "No user found",
