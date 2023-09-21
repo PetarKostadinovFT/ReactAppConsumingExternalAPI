@@ -7,12 +7,13 @@ function Article({ article }) {
   const { isAuthenticated } = useAuth();
 
   return (
-    <div className="col-md-6 col-lg-4 mb-4">
+    <div data-testid="articles" className="col-md-6 col-lg-4 mb-4">
       <div className="card shadow-sm h-100">
         {article.urlToImage && (
           <img
             src={article.urlToImage}
             className="card-img-top article-image"
+            onError={(e) => (e.target.style.display = "none")}
             alt={article.title}
           />
         )}
@@ -22,7 +23,12 @@ function Article({ article }) {
         </div>
         <div className="card-footer">
           {isAuthenticated && (
-            <Link to="/details" state={{ article }} className="btn details-btn">
+            <Link
+              to="/details"
+              state={{ article }}
+              className="btn details-btn"
+              data-testid="details-button"
+            >
               Details
             </Link>
           )}

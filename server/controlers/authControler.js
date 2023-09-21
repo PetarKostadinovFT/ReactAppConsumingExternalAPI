@@ -1,19 +1,26 @@
 const User = require("../models/userModel");
 const { hashPassword, comparePassword } = require("../utils");
 const jwt = require("jsonwebtoken");
+const emailValidator = require("email-validator");
 
 const registerUser = async (req, res) => {
-  try {
-    const { email, password } = req.body;
+  const { email, password, repass } = req.body;
 
-    if (!email) {
+  if (!emailValidator.validate(email)) {
+    return res.json({
+      error: "Invalid email format!",
+    });
+  }
+  try {
+    if (!email || !password) {
       return res.json({
-        error: "Email is required!",
+        error: "All fields are required!",
       });
     }
-    if (!password) {
+
+    if (password.length < 6) {
       return res.json({
-        error: "Password is required and should be at least 6 characters long!",
+        error: "Password must be 6 or more characters!",
       });
     }
 
