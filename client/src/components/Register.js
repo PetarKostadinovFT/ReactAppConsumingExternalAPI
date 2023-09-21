@@ -5,6 +5,7 @@ import "../styles/register.css";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useAuth } from "../context/userContext";
+import { handleRegister } from "../utils/registerUtils";
 
 function Register() {
   const navigate = useNavigate();
@@ -13,36 +14,9 @@ function Register() {
 
   const [loading, setLoading] = useState(false);
 
-  const handleRegister = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
-    const { email, password, repass } = data;
-
-    if (email === "" || password === "" || repass === "") {
-      return toast.error("All fields are required!");
-    }
-    if (password !== repass) {
-      toast.error("Passwords don't match!");
-      return;
-    }
-    try {
-      const { data } = await axios.post("/api/users/register", {
-        email,
-        password,
-      });
-
-      if (data.error) {
-        toast.error(data.error);
-      } else {
-        setData({});
-        setIsAuthenticated(true);
-        toast.success("Register Successful. Welcome!");
-        navigate("/home");
-      }
-    } catch (err) {
-      toast.error(err);
-    }
-
+    handleRegister(data, setIsAuthenticated, navigate);
     setLoading(false);
   };
 
@@ -51,12 +25,13 @@ function Register() {
       <div className="card shadow p-5">
         <div className="card-body">
           <h3 className="card-title text-center mb-4">Register</h3>
-          <form onSubmit={handleRegister}>
+          <form onSubmit={handleSubmit}>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">
                 Email
               </label>
               <input
+                type="email"
                 className="form-control"
                 id="email"
                 value={data.email}

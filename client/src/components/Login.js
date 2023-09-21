@@ -2,40 +2,17 @@ import { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/login.css";
-import axios from "axios";
-import { toast } from "react-hot-toast";
 import { useAuth } from "../context/userContext";
+import { handleLogin } from "../utils/loginUtils";
 
 function Login() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [data, setData] = useState({ email: "", password: "" });
   const { setIsAuthenticated } = useAuth();
   const navigate = useNavigate();
 
   const loginUser = async (e) => {
     e.preventDefault();
-
-    try {
-      if (email === "" || password === "") {
-        return toast.error("All fields are required!");
-      }
-      const { data } = await axios.post("/api/users/login", {
-        email,
-        password,
-      });
-
-      if (data.error) {
-        toast.error(data.error);
-      } else {
-        // setEmail({});
-        // setPassword({});
-        setIsAuthenticated(true);
-        toast.success("Login Successful. Welcome!");
-        navigate("/home");
-      }
-    } catch (error) {
-      toast.error(error);
-    }
+    handleLogin(data, setIsAuthenticated, navigate);
   };
 
   return (
@@ -43,7 +20,7 @@ function Login() {
       <div className="card shadow p-5">
         <div className="card-body">
           <h3 className="card-title text-center mb-4">Login</h3>
-          <form data-testid="login-form" onSubmit={loginUser}>
+          <form onSubmit={loginUser}>
             <div className="mb-3">
               <label htmlFor="email" className="form-label">
                 Email
@@ -53,8 +30,8 @@ function Login() {
                 className="form-control"
                 id="email"
                 placeholder="Enter Email..."
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
+                value={data.email}
+                onChange={(e) => setData({ ...data, email: e.target.value })}
               />
             </div>
             <div className="mb-3">
@@ -66,15 +43,11 @@ function Login() {
                 className="form-control"
                 id="password"
                 placeholder="Enter Password..."
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                value={data.password}
+                onChange={(e) => setData({ ...data, password: e.target.value })}
               />
             </div>
-            <button
-              data-testid="login-button"
-              type="submit"
-              className="btn btn-block login-btn"
-            >
+            <button type="submit" className="btn btn-block login-btn">
               Login
             </button>
           </form>

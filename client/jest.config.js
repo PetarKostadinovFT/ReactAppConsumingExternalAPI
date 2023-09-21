@@ -1,4 +1,10 @@
 module.exports = {
+  collectCoverage: true,
+  collectCoverageFrom: ["src/utils/*.{js,jsx}", "src/context/*.{js,jsx}"],
+  coverageDirectory: "coverage",
+  testEnvironment: "jsdom",
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+
   testEnvironment: "jest-environment-jsdom",
   transform: {
     "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
@@ -7,18 +13,6 @@ module.exports = {
   testPathIgnorePatterns: ["<rootDir>/template/", "<rootDir>/node_modules/"],
   moduleNameMapper: {
     "\\.(css|less|scss)$": "identity-obj-proxy",
-    axios: "axios/dist/node/axios.cjs",
+    "~src/(.*)": "<rootDir>/src/$1",
   },
-
-  transformIgnorePatterns: [
-    "node_modules/(?!" +
-      [
-        "node-fetch",
-        "fetch-blob",
-        "data-uri-to-buffer",
-        "jest-runtime",
-        "formdata-polyfill",
-      ].join("|") +
-      ")",
-  ],
 };
