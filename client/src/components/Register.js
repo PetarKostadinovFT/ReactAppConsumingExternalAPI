@@ -2,8 +2,6 @@ import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "../styles/register.css";
-import axios from "axios";
-import { toast } from "react-hot-toast";
 import { useAuth } from "../context/userContext";
 import { handleRegister } from "../utils/registerUtils";
 

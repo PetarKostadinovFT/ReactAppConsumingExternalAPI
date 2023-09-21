@@ -24,7 +24,7 @@ describe("AuthProvider functionality", () => {
   it("should update isAuthenticated when document.cookie changes", () => {
     global.document.cookie = "token=mockedToken";
 
-    const { result, rerender } = renderHook(() => useAuth(), {
+    const { result } = renderHook(() => useAuth(), {
       wrapper: AuthProvider,
     });
 

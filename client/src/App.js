@@ -9,7 +9,7 @@ import Register from "./components/Register";
 import "./App.css";
 import { Toaster } from "react-hot-toast";
 import NotFound from "./components/NotFound";
-import { useAuth } from "./context/userContext";
+
 
 function App() {
   return (
