@@ -1,8 +1,24 @@
+import React from "react";
+import styled from "styled-components";
+
+const FooterContainer = styled.footer`
+  background-color: #000;
+  color: white;
+  text-align: center;
+  padding: 1rem 0;
+`;
+
+const FooterText = styled.p`
+  margin: 0;
+  font-size: 1rem;
+`;
+
 function Footer() {
   return (
-    <footer className="bg-dark text-white text-center py-3">
-      <p>&copy; 2023 My Article Hub</p>
-    </footer>
+    <FooterContainer>
+      <FooterText>&copy; 2023 My Article Hub</FooterText>
+    </FooterContainer>
   );
 }
+
 export default Footer;
