@@ -1,52 +1,97 @@
+import React from "react";
 import { useLocation } from "react-router-dom";
-import "../styles/details.css";
+import styled from "styled-components"; 
 import LoadingSpinner from "./LoadingSpinner";
+
+const Container = styled.div`
+  margin: 2rem;
+  text-align: center;
+`;
+
+const ArticleContainer = styled.div`
+  max-width: 800px;
+  margin: 0 auto;
+`;
+
+const ArticleTitle = styled.h1`
+  margin: 0;
+  margin-bottom: 2rem;
+`;
+
+const ArticleDetail = styled.p`
+  margin: 0;
+  margin-bottom: 0.2rem;
+`;
+
+const ArticleImage = styled.img`
+  max-width: 100%;
+  height: auto;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+`;
+
+const ArticleDescription = styled.p`
+  margin-bottom: 2rem;
+`;
+
+const ReadMoreButton = styled.a`
+  margin-top: 2rem;
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #0a5e66;
+  color: wheat;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+
+  &:hover {
+    background-color: #0a5e66;
+    color: aliceblue;
+  }
+`;
 
 function NewsArticleDetails() {
   const location = useLocation();
-  if (!location.state) return;
+  if (!location.state) return null;
 
   const { article } = location.state;
 
   return (
-    <div className="container my-5">
+    <Container>
       {article ? (
-        <div className="row">
-          <div className="col-md-8 offset-md-2">
-            <h1 className="mb-4">{article.title}</h1>
-            <p className="mb-2">
-              <strong>Published by:</strong> {article.author}
-            </p>
-            <p className="mb-2">
-              <strong>Published at:</strong> {article.publishedAt}
-            </p>
-            <p className="mb-4">
-              <strong>Source:</strong> {article.source.name}
-            </p>
-            {article.urlToImage && (
-              <img
-                src={article.urlToImage}
-                className="img-fluid rounded mb-4"
-                alt={article.title}
-                onError={(e) => (e.target.style.display = "none")}
-              />
-            )}
-            <p className="lead mb-4">{article.description}</p>
-            <p className="mb-4">{article.content}</p>
-            <a
-              href={article.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="btn read-more-btn"
-            >
-              Read All About This
-            </a>
-          </div>
-        </div>
+        <ArticleContainer>
+          <ArticleTitle>{article.title}</ArticleTitle>
+
+          {article.urlToImage && (
+            <ArticleImage
+              src={article.urlToImage}
+              alt={article.title}
+              onError={(e) => (e.target.style.display = "none")}
+            />
+          )}
+          <ArticleDescription>{article.description}</ArticleDescription>
+          <p>{article.content}</p>
+          <ArticleDetail>
+            <strong>Published by:</strong> {article.author}
+          </ArticleDetail>
+          <ArticleDetail>
+            <strong>Published at:</strong> {article.publishedAt}
+          </ArticleDetail>
+          <ArticleDetail>
+            <strong>Source:</strong> {article.source.name}
+          </ArticleDetail>
+          <ReadMoreButton
+            href={article.url}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Read All About This
+          </ReadMoreButton>
+        </ArticleContainer>
       ) : (
         <LoadingSpinner />
       )}
-    </div>
+    </Container>
   );
 }
 

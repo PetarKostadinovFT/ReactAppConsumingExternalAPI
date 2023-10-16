@@ -1,5 +1,39 @@
 import React from "react";
-import "../styles/pagination.css";
+import styled from "styled-components";
+
+const PaginationContainer = styled.ul`
+  display: flex;
+  list-style: none;
+  padding: 0;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+`;
+
+const PageItem = styled.li`
+  &.active {
+    .page-link {
+      background-color: #007bff;
+      color: #fff;
+    }
+  }
+`;
+
+const PageLink = styled.button`
+  background-color: transparent;
+  border: none;
+  color: #0a5e66;
+  padding: 6px 12px;
+  border-radius: 0.25rem;
+  cursor: pointer;
+  margin: 0.125rem;
+  transition: background-color 0.3s, color 0.3s;
+
+  &:hover {
+    background-color: #0a5e66;
+    color: #fff;
+  }
+`;
 
 const Pagination = ({ totalPages, currentPage, onPageChange }) => {
   const pageNumbers = Array.from(
@@ -15,40 +49,33 @@ const Pagination = ({ totalPages, currentPage, onPageChange }) => {
   };
 
   return (
-    <ul className="pagination">
-      <li className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
-        <button
-          className="page-link"
-          onClick={() => handlePageChange(currentPage - 1)}
-        >
+    <PaginationContainer>
+      <PageItem className={`page-item ${currentPage === 1 ? "disabled" : ""}`}>
+        <PageLink onClick={() => handlePageChange(currentPage - 1)}>
           Previous
-        </button>
-      </li>
+        </PageLink>
+      </PageItem>
       {pageNumbers.map((pageNumber) => (
-        <li
+        <PageItem
           key={pageNumber}
           className={`page-item ${pageNumber === currentPage ? "active" : ""}`}
         >
-          <button
-            className="page-link"
-            onClick={() => handlePageChange(pageNumber)}
-          >
+          <PageLink onClick={() => handlePageChange(pageNumber)}>
             {pageNumber}
-          </button>
-        </li>
+          </PageLink>
+        </PageItem>
       ))}
-      <li
+      <PageItem
         className={`page-item ${currentPage === totalPages ? "disabled" : ""}`}
       >
-        <button
-          className="page-link"
-          onClick={() => handlePageChange(currentPage + 1)}
-        >
+        <PageLink onClick={() => handlePageChange(currentPage + 1)}>
           Next
-        </button>
-      </li>
-    </ul>
+        </PageLink>
+      </PageItem>
+    </PaginationContainer>
   );
 };
 
 export default Pagination;
+
+
